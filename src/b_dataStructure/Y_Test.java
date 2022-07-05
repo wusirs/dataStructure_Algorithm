@@ -40,4 +40,15 @@ public class Y_Test {
         list.remove(1);
         System.out.println(list);
     }
+
+    @Test
+    public void B_LinkList_Test04(){
+        _A_List list = new C_LinkList();
+        list.add(20);
+        list.add(0,10);
+        list.add(30);
+        list.add(list.size(), 40);
+        list.remove(1);
+        System.out.println(list);
+    }
 }
