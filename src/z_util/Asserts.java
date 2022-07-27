@@ -1,6 +1,6 @@
 package z_util;
 
-public class Assert {
+public class Asserts {
     public static void test(boolean value) {
         try {
             if (!value) throw new Exception("测试未通过");

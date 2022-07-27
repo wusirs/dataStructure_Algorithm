@@ -32,6 +32,9 @@ public abstract class _B_AbstractList<E> implements _A_List<E>  {
 	}
 
 	/**
+	 * 复杂度 :
+	 *     动态数组 : 最好 : O(1), 最坏 : O(n) （扩容） , 均摊 / 平均 : O (1)
+	 *     链表 :  O(n)
 	 * 添加元素到尾部
 	 * @param element
 	 */

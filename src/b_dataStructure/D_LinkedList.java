@@ -1,24 +1,34 @@
 package b_dataStructure;
 
 @SuppressWarnings("all")
-public class B_LinkList<E> extends _B_AbstractList<E> {
-//    private int size;
+public class D_LinkedList<E> extends _B_AbstractList<E> {
     private Node<E> first;
+    private Node<E> last;
 
     private static class Node<E> {
         E element;
         Node<E> next;
+        Node<E> prev;
 
-        public Node(E element, Node<E> next) {
+        public Node(Node<E> prev, E element, Node<E> next) {
+            this.prev = prev;
             this.element = element;
             this.next = next;
         }
     }
 
+    /**
+     * GC Root对象有哪些
+     * 虚拟机栈 -----栈帧中的本地 变量表中引用的对象
+     * 本地方法栈 -----即一般说的 Native方法引用的对象
+     * 方法区中 类静态属性引用的对象
+     * 方法区中 常量引用的对象
+     */
     @Override
     public void clear() {
         size = 0;
         first = null;
+        last = null;;
     }
 
     @Override
@@ -54,12 +64,28 @@ public class B_LinkList<E> extends _B_AbstractList<E> {
     public void add(int index, E element) {
         rangeCheckForAdd(index);
 
-        if (index == 0) {
-            first = new Node<>(element, first);
-        } else {
-            Node<E> prev = node(index - 1);
-            prev.next = new Node<>(element, prev.next);
+        if (size == index){
+            Node<E> oldLast = last;
+            last = new Node<>(last, element, null);
+            if (oldLast == null) // 添加第一个元素
+                first = last;
+            else
+                oldLast.next = last;
+
+        }else {
+            Node<E> next = node(index);
+            Node<E> prev = next.prev;
+            Node<E> node = new Node<>(prev, element, next);
+            next.prev = node;
+
+            // 往0这个位置插入
+            if (prev == null)
+                first = node;
+            else
+                prev.next = node;
         }
+
+
         size++;
     }
 
@@ -67,15 +93,21 @@ public class B_LinkList<E> extends _B_AbstractList<E> {
     public E remove(int index) {
         rangeCheck(index);
 
-        Node<E> node = first;
-        if (index == 0) {
-            first = first.next;
-        } else {
-            Node<E> prev = node(index - 1);
-            node = prev.next;
-            prev.next = node.next;
-        }
-        size--;
+        Node<E> node = node(index);
+
+        Node<E> prev = node.prev;
+        Node<E> next = node.next;
+        if (prev == null)   // index == 0
+            first = next;
+        else
+            prev.next = next;
+
+        if (next  == null)  // index == size - 1
+            last = prev;
+        else
+            next.prev = prev;
+
+        size --;
         return node.element;
     }
 
@@ -103,11 +135,19 @@ public class B_LinkList<E> extends _B_AbstractList<E> {
     private Node<E> node(int index) {
         rangeCheck(index);
 
-        Node<E> node = first;
-        for (int i = 0; i < index; i++) {
-            node = node.next;
+        if(index < (size >> 1)){
+            Node<E> node = first;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+            return node;
+        }else{
+            Node<E> node = last;
+            for (int i = size - 1; i > index; i--) {
+                node = node.prev;
+            }
+            return node;
         }
-        return node;
     }
 
     @Override

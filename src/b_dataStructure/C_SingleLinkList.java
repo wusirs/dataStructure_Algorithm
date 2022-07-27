@@ -5,11 +5,11 @@ package b_dataStructure;
  * @param <E>
  */
 @SuppressWarnings("all")
-public class C_LinkList<E> extends _B_AbstractList<E> {
+public class C_SingleLinkList<E> extends _B_AbstractList<E> {
 //    private int size;
     private Node<E> first;
 
-    public C_LinkList() {
+    public C_SingleLinkList() {
         this.first = new Node<>(null, null);
     }
 
