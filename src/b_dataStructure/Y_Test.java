@@ -93,6 +93,35 @@ public class Y_Test {
         Asserts.test(list.get(list.size() - 1) == 44);
     }
 
+
+    @Test
+    public void E_SingleCircleLinkedList_Test01(){
+        E_SingleCircleLinkedList<Integer> list = new E_SingleCircleLinkedList();
+        list.add(11);
+        list.add(22);
+        list.add(33);
+        list.add(44);
+
+        list.add(0, 55);
+        list.add(2, 66);
+        list.add(list.size(), 77);
+
+        System.out.println(list);
+
+        list.remove(0);
+        list.remove(2);
+        list.remove(list.size() - 1);
+
+        System.out.println(list);
+
+        Asserts.test(list.indexOf(44) == 3);
+        Asserts.test(list.indexOf(22) == A_ArrayList.ELEMENT_NOT_FOUND);
+        Asserts.test(list.contains(33));
+        Asserts.test(list.get(0) == 11);
+        Asserts.test(list.get(1) == 66);
+        Asserts.test(list.get(list.size() - 1) == 44);
+    }
+
     @Test
     public void test01(){
         int gcb = gcb(24, 32);

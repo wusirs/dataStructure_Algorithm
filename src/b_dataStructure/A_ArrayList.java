@@ -35,6 +35,10 @@ public class A_ArrayList<E> extends _B_AbstractList<E> {
             elements[i] = null;
         }
         size = 0;
+        if (elements != null && elements.length > DEFAULT_CAPACITY){
+        // 根据自己的需要来
+            elements = (E[]) new Object[DEFAULT_CAPACITY];
+        }
     }
 
 
