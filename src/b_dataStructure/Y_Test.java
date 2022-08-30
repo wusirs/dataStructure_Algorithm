@@ -123,6 +123,58 @@ public class Y_Test {
     }
 
     @Test
+    public void F_CircleLinkedList_Test01(){
+        F_CircleLinkedList<Integer> list = new F_CircleLinkedList();
+        list.add(11);
+        list.add(22);
+        list.add(33);
+        list.add(44);
+
+        list.add(0, 55);
+        list.add(2, 66);
+        list.add(list.size(), 77);
+
+        System.out.println(list);
+
+        list.remove(0);
+        list.remove(2);
+        list.remove(list.size() - 1);
+
+        System.out.println(list);
+
+        Asserts.test(list.indexOf(44) == 3);
+        Asserts.test(list.indexOf(22) == A_ArrayList.ELEMENT_NOT_FOUND);
+        Asserts.test(list.contains(33));
+        Asserts.test(list.get(0) == 11);
+        Asserts.test(list.get(1) == 66);
+        Asserts.test(list.get(list.size() - 1) == 44);
+    }
+
+
+    /**
+     * 约瑟夫问题
+     */
+    private void josephusProblem(){
+        F_CircleLinkedList<Integer> list = new F_CircleLinkedList<Integer>();
+        for (int i = 1; i <= 8; i ++){
+            list.add(i);
+        }
+        // 指向头节点
+        list.reset();
+        while (!(list.isEmpty())){
+            list.next();
+            list.next();
+            System.out.print(list.remove() + "->");
+        }
+    }
+
+
+    @Test
+    public void F_CircleLinkedList_JosephusProblem_Test02(){
+        josephusProblem();
+    }
+
+    @Test
     public void test01(){
         int gcb = gcb(24, 32);
         System.out.println(gcb);
