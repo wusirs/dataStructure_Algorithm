@@ -1,4 +1,4 @@
-package b_dataStructure;
+package b_link;
 
 public interface _A_List<E> {
 	static final int ELEMENT_NOT_FOUND = -1;

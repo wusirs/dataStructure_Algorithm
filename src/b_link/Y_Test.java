@@ -1,6 +1,6 @@
-package b_dataStructure;
+package b_link;
 
-import b_dataStructure.z_Objects.Person;
+import b_link.z_Objects.Person;
 import org.junit.Test;
 import z_util.Asserts;
 

@@ -1,4 +1,4 @@
-package b_dataStructure.z_Objects;
+package b_link.z_Objects;
 
 public class Person {
     private int age;

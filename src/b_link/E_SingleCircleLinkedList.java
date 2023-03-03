@@ -1,17 +1,8 @@
-package b_dataStructure;
+package b_link;
 
-/**
- * 增加虚拟头节点
- * @param <E>
- */
 @SuppressWarnings("all")
-public class C_SingleLinkList<E> extends _B_AbstractList<E> {
-//    private int size;
+public class E_SingleCircleLinkedList<E> extends _B_AbstractList<E> {
     private Node<E> first;
-
-    public C_SingleLinkList() {
-        this.first = new Node<>(null, null);
-    }
 
     private static class Node<E> {
         E element;
@@ -20,6 +11,13 @@ public class C_SingleLinkList<E> extends _B_AbstractList<E> {
         public Node(E element, Node<E> next) {
             this.element = element;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append(element).append("_").append(next.element);
+            return sb.toString();
         }
     }
 
@@ -61,17 +59,39 @@ public class C_SingleLinkList<E> extends _B_AbstractList<E> {
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-        Node<E> prev = index == 0 ? first : node(index - 1);
-        prev.next = new Node<>(element, prev.next);
+
+        if (index == 0) { // 往0位置插入元素时需要将last元素的last指向0位置的元素
+            Node<E> newFirst = new Node<>(element, first);
+            // 拿到最后一个节点
+            Node<E> last = (size == 0) ? newFirst : node(size - 1);
+            last.next = newFirst;
+            first = newFirst;
+        } else {
+            Node<E> prev = node(index - 1);
+            prev.next = new Node<>(element, prev.next);
+        }
         size++;
     }
 
     @Override
     public E remove(int index) {
         rangeCheck(index);
-        Node<E> prev = index == 0 ? first : node(index - 1);
-        Node<E> node = prev.next;
-        prev.next = node.next;
+
+        Node<E> node = first;
+        if (index == 0) {
+            if(size == 1){
+                first = null;
+            }else {
+                // 拿到最后一个节点
+                Node<E> last = node(size - 1); // 注意这一步要放到改变first位置之前，不然不能拿到last节点
+                first = first.next;
+                last.next = first;
+            }
+        } else {
+            Node<E> prev = node(index - 1);
+            node = prev.next;
+            prev.next = node.next;
+        }
         size--;
         return node.element;
     }
@@ -100,7 +120,7 @@ public class C_SingleLinkList<E> extends _B_AbstractList<E> {
     private Node<E> node(int index) {
         rangeCheck(index);
 
-        Node<E> node = first.next;
+        Node<E> node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
@@ -113,17 +133,10 @@ public class C_SingleLinkList<E> extends _B_AbstractList<E> {
 
         stringBuilder.append("size = ").append(size).append(", [");
 
-        Node<E> node = this.first.next;
-//        for (int i = 0; i < size; i++) {
-//            if (i != 0) stringBuilder.append(", ");
-//            stringBuilder.append(node.element);
-//            node = node.next;
-//        }
-
-        while (node != null){
-            stringBuilder.append(node.element);
-            if (node.next != null)
-                stringBuilder.append(", ");
+        Node<E> node = this.first;
+        for (int i = 0; i < size; i++) {
+            if (i != 0) stringBuilder.append(", ");
+            stringBuilder.append(node);
             node = node.next;
         }
         stringBuilder.append("]");

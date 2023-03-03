@@ -1,9 +1,10 @@
-package b_dataStructure;
+package b_link;
 
 @SuppressWarnings("all")
-public class D_LinkedList<E> extends _B_AbstractList<E> {
+public class F_CircleLinkedList<E> extends _B_AbstractList<E> {
     private Node<E> first;
     private Node<E> last;
+    private Node<E> current;
 
     private static class Node<E> {
         E element;
@@ -42,7 +43,8 @@ public class D_LinkedList<E> extends _B_AbstractList<E> {
     public void clear() {
         size = 0;
         first = null;
-        last = null;;
+        last = null;
+        ;
     }
 
     @Override
@@ -78,25 +80,28 @@ public class D_LinkedList<E> extends _B_AbstractList<E> {
     public void add(int index, E element) {
         rangeCheckForAdd(index);
 
-        if (size == index){
+        if (size == index) {
             Node<E> oldLast = last;
-            last = new Node<>(last, element, null);
-            if (oldLast == null) // 添加第一个元素
+            last = new Node<>(oldLast, element, first);
+            if (oldLast == null) { // 添加第一个元素
                 first = last;
-            else
+                first.next = first;
+                first.prev = first;
+            } else {
                 oldLast.next = last;
-
-        }else {
+                first.prev = last;
+            }
+        } else {
             Node<E> next = node(index);
             Node<E> prev = next.prev;
             Node<E> node = new Node<>(prev, element, next);
             next.prev = node;
 
+            prev.next = node;
             // 往0这个位置插入
-            if (prev == null)
+            if (next == first) { // index == 0
                 first = node;
-            else
-                prev.next = node;
+            }
         }
 
 
@@ -106,23 +111,7 @@ public class D_LinkedList<E> extends _B_AbstractList<E> {
     @Override
     public E remove(int index) {
         rangeCheck(index);
-
-        Node<E> node = node(index);
-
-        Node<E> prev = node.prev;
-        Node<E> next = node.next;
-        if (prev == null)   // index == 0
-            first = next;
-        else
-            prev.next = next;
-
-        if (next  == null)  // index == size - 1
-            last = prev;
-        else
-            next.prev = prev;
-
-        size --;
-        return node.element;
+        return remove(node(index));
     }
 
     @Override
@@ -149,13 +138,13 @@ public class D_LinkedList<E> extends _B_AbstractList<E> {
     private Node<E> node(int index) {
         rangeCheck(index);
 
-        if(index < (size >> 1)){
+        if (index < (size >> 1)) {
             Node<E> node = first;
             for (int i = 0; i < index; i++) {
                 node = node.next;
             }
             return node;
-        }else{
+        } else {
             Node<E> node = last;
             for (int i = size - 1; i > index; i--) {
                 node = node.prev;
@@ -164,15 +153,57 @@ public class D_LinkedList<E> extends _B_AbstractList<E> {
         }
     }
 
+    public void reset(){
+        current = first;
+    }
+
+    public E next(){
+        if (current == null)
+            return null;
+        current = current.next;
+        return current.element;
+    }
+
+    private E remove(Node<E> node){
+        if (size == 1) {
+            first = last = null;
+        } else {
+            Node<E> prev = node.prev;
+            Node<E> next = node.next;
+            prev.next = next;
+            next.prev = prev;
+
+            if (node == first)   // index == 0
+                first = next;
+
+            if (node == last)  // index == size - 1
+                last = prev;
+
+        }
+        size--;
+        return node.element;
+    }
+
+    public E remove(){
+        if (current == null)
+            return null;
+        Node<E> next = current.next;
+        E element = remove(current);
+        if (size == 0)
+            current = null;
+        else
+            current = next;
+        return element;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("size = ").append(size).append(", [");
         Node<E> node = this.first;
-        while (node != null){
+        for (int i = 0; i < size; i++) {
+            if (i != 0) stringBuilder.append(", ");
             stringBuilder.append(node);
-            if (node.next != null)
-                stringBuilder.append(", ");
             node = node.next;
         }
         stringBuilder.append("]");

@@ -1,4 +1,4 @@
-package b_dataStructure;
+package b_link;
 
 @SuppressWarnings("all")
 public abstract class _B_AbstractList<E> implements _A_List<E>  {

@@ -1,9 +1,17 @@
-package b_dataStructure;
+package b_link;
 
+/**
+ * 增加虚拟头节点
+ * @param <E>
+ */
 @SuppressWarnings("all")
-public class B_SingleLinkList<E> extends _B_AbstractList<E> {
+public class C_SingleLinkList<E> extends _B_AbstractList<E> {
 //    private int size;
     private Node<E> first;
+
+    public C_SingleLinkList() {
+        this.first = new Node<>(null, null);
+    }
 
     private static class Node<E> {
         E element;
@@ -50,36 +58,20 @@ public class B_SingleLinkList<E> extends _B_AbstractList<E> {
         return oldElement;
     }
 
-    /**
-     * 复杂度 ： 最好 : O(1), 最坏 : O(n), 平均 : O(n)
-     * @param index
-     * @param element
-     */
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-
-        if (index == 0) {
-            first = new Node<>(element, first);
-        } else {
-            Node<E> prev = node(index - 1);
-            prev.next = new Node<>(element, prev.next);
-        }
+        Node<E> prev = index == 0 ? first : node(index - 1);
+        prev.next = new Node<>(element, prev.next);
         size++;
     }
 
     @Override
     public E remove(int index) {
         rangeCheck(index);
-
-        Node<E> node = first;
-        if (index == 0) {
-            first = first.next;
-        } else {
-            Node<E> prev = node(index - 1);
-            node = prev.next;
-            prev.next = node.next;
-        }
+        Node<E> prev = index == 0 ? first : node(index - 1);
+        Node<E> node = prev.next;
+        prev.next = node.next;
         size--;
         return node.element;
     }
@@ -105,15 +97,10 @@ public class B_SingleLinkList<E> extends _B_AbstractList<E> {
         return ELEMENT_NOT_FOUND;
     }
 
-    /**
-     * 复杂度 ： 最好 : O(1), 最坏 : O(n), 平均 : O(n)
-     * @param index
-     * @return
-     */
     private Node<E> node(int index) {
         rangeCheck(index);
 
-        Node<E> node = first;
+        Node<E> node = first.next;
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
@@ -126,7 +113,7 @@ public class B_SingleLinkList<E> extends _B_AbstractList<E> {
 
         stringBuilder.append("size = ").append(size).append(", [");
 
-        Node<E> node = this.first;
+        Node<E> node = this.first.next;
 //        for (int i = 0; i < size; i++) {
 //            if (i != 0) stringBuilder.append(", ");
 //            stringBuilder.append(node.element);

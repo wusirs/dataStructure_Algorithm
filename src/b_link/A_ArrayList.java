@@ -1,4 +1,4 @@
-package b_dataStructure;
+package b_link;
 
 @SuppressWarnings(value = {"unchecked", "rawtypes", "all"})
 public class A_ArrayList<E> extends _B_AbstractList<E> {
