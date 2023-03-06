@@ -17,6 +17,15 @@ public class C_CircleQueue<E> {
         elements = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
+    public void clear(){
+        for (int i = 0; i < elements.length; i++) {
+            elements[index(i)] = null;
+        }
+        // 上面还要用到，所以放到后面
+        size = 0;
+        front = 0;
+    }
+
     public int size() {
         return size;
     }

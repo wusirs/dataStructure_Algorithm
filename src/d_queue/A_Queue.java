@@ -6,6 +6,11 @@ import b_link._A_List;
 public class A_Queue<E> {
     private _A_List<E> linkedList = new D_LinkedList<>();
 
+
+    public void clear(){
+        linkedList.clear();
+    }
+
     public int size() {
         return linkedList.size();
     }
@@ -25,4 +30,5 @@ public class A_Queue<E> {
     public E front() {
         return linkedList.get(0);
     }
+
 }

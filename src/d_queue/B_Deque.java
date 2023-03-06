@@ -5,6 +5,10 @@ import b_link.D_LinkedList;
 public class B_Deque<E> {
     private D_LinkedList<E> linkedList = new D_LinkedList<E>();
 
+    public void clear(){
+        linkedList.clear();
+    }
+
     public int size() {
         return linkedList.size();
     }
