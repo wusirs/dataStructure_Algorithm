@@ -38,12 +38,16 @@ public class Fibonacci {
 
 
     private int fib(int n) {
-        if (n <= 1) return n;
+        if (n <= 1) {
+            return n;
+        }
         return fib(n - 1) + fib(n - 2);
     }
 
     private int fib2(int n) {
-        if (n <= 1) return n;
+        if (n <= 1) {
+            return n;
+        }
         int f1 = 0;
         int f2 = 1;
         while (n-- > 1) {

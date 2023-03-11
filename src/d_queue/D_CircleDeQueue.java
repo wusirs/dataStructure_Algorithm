@@ -24,8 +24,8 @@ public class D_CircleDeQueue<E> {
         }
 
         // 上面还要用到，所以放到后面
-        size = 0;
         front = 0;
+        size = 0;
     }
 
     public int size() {
@@ -100,7 +100,9 @@ public class D_CircleDeQueue<E> {
 
     private void ensureCapacity(int capacity){
         int oldCapacity = elements.length;
-        if (oldCapacity >= capacity) return;
+        if (oldCapacity >= capacity) {
+            return;
+        }
 
         int newCapacity = oldCapacity + (oldCapacity >> 1);
         E[] newElements = (E[]) new Object[newCapacity];
