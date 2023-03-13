@@ -215,36 +215,80 @@ public class A_BinarySearchTree<E> implements BinaryTreeInfo {
         levelOrderTraversal(null);
     }
 
+    /**
+     * 利用层序遍历判断一棵树是不是完全二叉树
+     * 思路:
+     * 如果树为空,返回false
+     * 如果树不为空,开始层序遍历二叉树
+     * 如果node.left != null && node.right != null,将node.left,node.right按顺序入队
+     * 如果node.left == null && node.right != null,返回false
+     * 如果node.left !=  null && node.right == null或者node.left == null && node.right == null
+     * 那么接下来所有的节点都应该是叶子节点,如果接下来的遍历中出现了不是叶子结点的节点则返回false
+     *
+     * @return
+     */
     public boolean isComplete() {
         if (root == null) {
             return false;
         }
-
+        boolean leaf = false;
         Queue<Node<E>> queue = new LinkedList<>();
         queue.offer(root);
-
-        boolean leaf = false;
         while (!queue.isEmpty()) {
-            Node<E> node = queue.poll();
-            if (leaf && !node.isLeaf()) {
+            Node<E> poll = queue.poll();
+            if (leaf && !poll.isLeaf()){
+                return false;
+            }
+            if (poll.left != null){
+                queue.offer(poll.left);
+            }else if(poll.right != null){
+                //如果node.left == null && node.right != null,返回false
                 return false;
             }
 
-            if (node.left != null) {
-                queue.offer(node.left);
-            } else if (node.right != null) { // node.left == null && node.right != null
-                return false;
-            }
-
-            if (node.right != null) {
-                queue.offer(node.right);
-            } else { // node.right == null
+            if (poll.right != null){
+                //如果node.left != null && node.right != null,将node.left,node.right按顺序入队
+                queue.offer(poll.right);
+            }else {
+//          如果node.left !=  null && node.right == null或者node.left == null && node.right == null
+//          那么接下来所有的节点都应该是叶子节点,如果接下来的遍历中出现了不是叶子结点的节点则返回false
                 leaf = true;
             }
         }
-
         return true;
     }
+
+    /**
+     * 和上面的isComplete效果一样,逻辑判断有区别
+     * @param visitor
+     */
+//    public boolean isComplete() {
+//        if (root == null) {
+//            return false;
+//        }
+//        boolean leaf = false;
+//        Queue<Node<E>> queue = new LinkedList<>();
+//        queue.offer(root);
+//        while (!queue.isEmpty()) {
+//            Node<E> poll = queue.poll();
+//            if (leaf && !poll.isLeaf()){
+//                return false;
+//            }
+//            if (poll.hasTwoChildren()) {
+//                queue.offer(poll.left);
+//                queue.offer(poll.right);
+//            } else if (poll.left == null && poll.right != null) {
+//                return false;
+//            } else {
+//                if (poll.left != null) {
+//                    queue.offer(poll.left);
+//                }
+//                leaf = true;
+//            }
+//        }
+//        return true;
+//    }
+
 
 
     public void levelOrderTraversal(Visitor<E> visitor) {
@@ -260,7 +304,7 @@ public class A_BinarySearchTree<E> implements BinaryTreeInfo {
             if (visitor == null) {
                 System.out.print(poll.element + ", ");
             } else {
-                if (visitor.stop){
+                if (visitor.stop) {
                     return;
                 }
                 visitor.stop = visitor.visit(poll.element);
@@ -275,6 +319,64 @@ public class A_BinarySearchTree<E> implements BinaryTreeInfo {
         }
     }
 
+    /**
+     * Returns the
+     * 利用递归计算二叉树的高度
+     *
+     * @return
+     */
+    public int height() {
+        return height(root);
+    }
+
+    public int height(Node<E> node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+
+    public int height2() {
+        return height2(root);
+    }
+
+    /**
+     * 利用层序遍历计算二叉树的高度
+     *
+     * @param node
+     * @return
+     */
+    public int height2(Node<E> node) {
+        if (node == null) {
+            return 0;
+        }
+        // 树的高度
+        int height = 0;
+        // 存储着每一层的元素的数量
+        int levelSize = 1;
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            Node<E> poll = queue.poll();
+            levelSize--; // 没访问队列中的一个节点,这一层的节点数就减一
+
+            if (poll.left != null) {
+                queue.offer(poll.left);
+            }
+
+            if (poll.right != null) {
+                queue.offer(poll.right);
+            }
+
+            if (levelSize == 0) {
+// 当levelSize减到零的时候就意味着即将要访问下一层,同时下一层的所有节点也都添加到队列中
+                levelSize = queue.size();
+                height++;
+            }
+        }
+        return height;
+    }
 
     private static class Node<E> {
         E element;
@@ -299,6 +401,7 @@ public class A_BinarySearchTree<E> implements BinaryTreeInfo {
 
     public static abstract class Visitor<E> {
         boolean stop;
+
         abstract boolean visit(E element);
     }
 }

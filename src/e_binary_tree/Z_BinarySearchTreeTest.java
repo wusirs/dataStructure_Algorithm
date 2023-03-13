@@ -57,8 +57,11 @@ public class Z_BinarySearchTreeTest {
             binarySearchTree.add(new Person((int) (Math.random() * 100)));
         }
 
-        String s = BinaryTrees.printString(binarySearchTree);
-        Files.writeToFile("D:/test/1.txt", s + "\n", true);
+        BinaryTrees.println(binarySearchTree);
+//        String s = BinaryTrees.printString(binarySearchTree);
+//        Files.writeToFile("D:/test/1.txt", s + "\n", true);
+        System.out.println(binarySearchTree.height2());
+        System.out.println(binarySearchTree.isComplete());
     }
 
 
@@ -107,15 +110,28 @@ public class Z_BinarySearchTreeTest {
             binarySearchTree.add(new Person(data[i]));
         }
 
-//        binarySearchTree.levelOrderTraversal(new A_BinarySearchTree.Visitor<Person>() {
-//            @Override
-//            public void visit(Person element) {
-//                System.out.print(element.toString() + ", ");
-//            }
-//        });
-
-//        binarySearchTree.levelOrderTraversal((element) -> System.out.print(element.toString() +
-//        ", "));
+        /*binarySearchTree.levelOrderTraversal(new A_BinarySearchTree.Visitor<Person>() {
+            @Override
+            public boolean visit(Person element) {
+                System.out.print(element.toString() + ", ");
+                if (element.getAge() == 4){
+                    return true;
+                }
+                return false;
+            }
+        });*/
         binarySearchTree.levelOrderTraversal();
+        System.out.println(binarySearchTree.height());
+    }
+
+    @Test
+    public void isCompleteTreeTest() {
+        Integer data[] = new Integer[]{7, 4, 9, 2, 5};
+        A_BinarySearchTree<Person> binarySearchTree = new A_BinarySearchTree<Person>();
+        for (int i = 0; i < data.length; i++) {
+            binarySearchTree.add(new Person(data[i]));
+        }
+        BinaryTrees.println(binarySearchTree);
+        System.out.println(binarySearchTree.isComplete());
     }
 }
