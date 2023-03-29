@@ -6,7 +6,6 @@ import z_util.file.Files;
 import z_util.printer.BinaryTrees;
 
 import java.util.Comparator;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author heisenberg
@@ -15,7 +14,7 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void BinarySearchTreeTest_01() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
-        A_BinarySearchTree<Integer> binarySearchTreeA = new A_BinarySearchTree<Integer>();
+        B_BST<Integer> binarySearchTreeA = new B_BST<Integer>();
         for (int i = 0; i < data.length; i++) {
             binarySearchTreeA.add(data[i]);
         }
@@ -26,8 +25,8 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void BinarySearchTreeTest_02() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
-        A_BinarySearchTree<Person> binarySearchTree =
-                new A_BinarySearchTree<Person>(new Comparator<Person>() {
+        B_BST<Person> binarySearchTree =
+                new B_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -45,8 +44,8 @@ public class Z_BinarySearchTreeTest {
 
     @Test
     public void BinarySearchTreeTest_03() {
-        A_BinarySearchTree<Person> binarySearchTree =
-                new A_BinarySearchTree<Person>(new Comparator<Person>() {
+        B_BST<Person> binarySearchTree =
+                new B_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -70,8 +69,8 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void preorderTraversalTest() {
         Integer data[] = new Integer[]{7, 4, 2, 1, 3, 5, 9, 8, 11, 10, 12};
-        A_BinarySearchTree<Person> binarySearchTree =
-                new A_BinarySearchTree<Person>(new Comparator<Person>() {
+        B_BST<Person> binarySearchTree =
+                new B_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -98,8 +97,8 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void inorderTraversalTest() {
         Integer data[] = new Integer[]{7, 4, 2, 1, 3, 5, 9, 8, 11, 10, 12};
-        A_BinarySearchTree<Person> binarySearchTree =
-                new A_BinarySearchTree<Person>(new Comparator<Person>() {
+        B_BST<Person> binarySearchTree =
+                new B_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -127,11 +126,43 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void isCompleteTreeTest() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5};
-        A_BinarySearchTree<Person> binarySearchTree = new A_BinarySearchTree<Person>();
+        B_BST<Person> binarySearchTree = new B_BST<Person>();
         for (int i = 0; i < data.length; i++) {
             binarySearchTree.add(new Person(data[i]));
         }
         BinaryTrees.println(binarySearchTree);
         System.out.println(binarySearchTree.isComplete());
+    }
+
+    @Test
+    public void removeTest(){
+        Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
+        B_BST<Integer> binarySearchTree = new B_BST<Integer>();
+        for (int i = 0; i < data.length; i++) {
+            binarySearchTree.add(data[i]);
+        }
+        BinaryTrees.println(binarySearchTree);
+//        binarySearchTree.remove(1);
+//        binarySearchTree.remove(3);
+//        binarySearchTree.remove(12);
+//        binarySearchTree.remove(5);
+        binarySearchTree.remove(7);
+        BinaryTrees.println(binarySearchTree);
+    }
+
+
+    @Test
+    public void AVLTreeTest(){
+        Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
+        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return 0;
+            }
+        });
+        for (int i = 0; i < data.length; i++) {
+            avlTree.add(data[i]);
+        }
+        BinaryTrees.println(avlTree);
     }
 }
