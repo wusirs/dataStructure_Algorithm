@@ -67,35 +67,59 @@ public class C_AVLTree<E> extends B_BST<E>{
         }
     }
 
+    /**
+     * 左旋
+     * @param grand
+     */
     private void rotateLeft(Node<E> grand){
         Node<E> parent = grand.right;
         Node<E> child = parent.left;
         grand.right = child;
         parent.left = grand;
 
-        // 让parent成为子树的根节点
+        afterRotate(grand, parent, child);
+    }
+
+    /**
+     * 右旋
+     * @param grand
+     */
+    private void rotateRight(Node<E> grand){
+        Node<E> parent = grand.left;
+        Node<E> child = parent.right;
+        grand.left = child;
+        parent.right = grand;
+
+        afterRotate(grand, parent, child);
+    }
+
+    /**
+     * 左右旋转公用代码
+     * @param grand
+     * @param parent
+     * @param child
+     */
+    private void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
+        // 让parent成为这颗子树根节点
         parent.parent = grand.parent;
         if (grand.isLeftChild()){
             grand.parent.left = parent;
-        }else if (grand.isRightChild()){
+        } else if (grand.isRightChild()) {
             grand.parent.right = parent;
-        }else { // grand 是根节点
+        }else{ // grand是根节点的情况
             root = parent;
         }
-        // 更新child的parent
+
+        //更新child的parent
         if (child != null){
             child.parent = grand;
         }
+
         // 更新grand的parent
         grand.parent = parent;
 
-        // 更新高度
         updateHeight(grand);
         updateHeight(parent);
-    }
-
-    private void rotateRight(Node<E> grand){
-
     }
 
     private boolean isBalanced(Node<E> node) {
@@ -122,7 +146,7 @@ public class C_AVLTree<E> extends B_BST<E>{
         public void updateHeight() {
             int leftHeight = left == null ? 0 : ((AVLNode)left).height;
             int rightHeight = right == null ? 0 : ((AVLNode)right).height;
-            this.height = 1 + Math.abs(leftHeight - rightHeight);
+            this.height = 1 + Math.max(leftHeight, rightHeight);
         }
 
         public Node<E> tallerChild() {
@@ -139,11 +163,24 @@ public class C_AVLTree<E> extends B_BST<E>{
             // 如果左右子树一样高的话,那么就返回同向的那个节点(也就是this这个节点是其父节点的左节点那么就返回左子节点,反之就返回右子节点)
             return isLeftChild() ? left : right;
         }
+
+        @Override
+        public String toString() {
+            String parentStr = this.parent != null ? this.parent.element.toString() : "null";
+            return this.element + "_p(" + parentStr + ")_h(" + this.height + ")";
+        }
     }
 
     @Override
     protected Node<E> createNode(E element, Node<E> parent) {
         return new AVLNode<>(element, parent);
     }
+
+//    @Override
+//    public Object string(Object node) {
+//        Node<E> myNode = ((Node<E>) node);
+//        String parentStr = myNode.parent != null ? myNode.parent.element.toString() : "null";
+//        return myNode.element + "_p(" + parentStr + ")_h(" + ((AVLNode<E>)node).height + ")";
+//    }
 }
 

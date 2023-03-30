@@ -291,9 +291,7 @@ public class A_BinaryTree<E> implements BinaryTreeInfo {
 
     @Override
     public Object string(Object node) {
-        Node<E> myNode = ((Node<E>) node);
-        String parentStr = myNode.parent != null ? myNode.parent.element.toString() : "null";
-        return myNode.element + "_" + parentStr;
+        return node;
     }
 
     /**
@@ -379,6 +377,13 @@ public class A_BinaryTree<E> implements BinaryTreeInfo {
 
         public boolean isRightChild(){
             return parent != null && this == parent.right;
+        }
+
+        @Override
+        public String toString() {
+//            Node<E> myNode = ((Node<E>) this);
+            String parentStr = this.parent != null ? this.parent.element.toString() : "null";
+            return this.element + "_p(" + parentStr + ")";
         }
     }
 

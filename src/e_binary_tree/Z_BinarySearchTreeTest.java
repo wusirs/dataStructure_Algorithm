@@ -135,7 +135,7 @@ public class Z_BinarySearchTreeTest {
     }
 
     @Test
-    public void removeTest(){
+    public void removeTest() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
         B_BST<Integer> binarySearchTree = new B_BST<Integer>();
         for (int i = 0; i < data.length; i++) {
@@ -152,14 +152,10 @@ public class Z_BinarySearchTreeTest {
 
 
     @Test
-    public void AVLTreeTest(){
-        Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
-        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return 0;
-            }
-        });
+    public void AVLTreeTest() {
+        Integer data[] = new Integer[]{85, 19, 69, 3, 7, 99, 95, 2, 1, 70, 44, 58, 11, 21, 14, 93
+                , 57, 4, 56};
+        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>();
         for (int i = 0; i < data.length; i++) {
             avlTree.add(data[i]);
         }
