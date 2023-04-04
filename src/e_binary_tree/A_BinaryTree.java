@@ -5,6 +5,7 @@ import z_util.printer.BinaryTreeInfo;
 import java.util.LinkedList;
 import java.util.Queue;
 
+@SuppressWarnings("all")
 public class A_BinaryTree<E> implements BinaryTreeInfo {
     protected int size;
 
