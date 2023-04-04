@@ -35,9 +35,23 @@ public class C_AVLTree<E> extends B_BST<E>{
                 updateHeight(node);
             }else {
                 // TODO 恢复平衡
-                restoreBalance(node);
+//                restoreBalance(node);
+                restoreBalance2(node);
                 // 整棵树恢复平衡
                 break;
+            }
+        }
+    }
+
+    @Override
+    protected void afterRemove(Node node) {
+        while ((node = node.parent) != null){
+            if (isBalanced(node)){
+                // TODO 更新高度
+                updateHeight(node);
+            }else {
+                // TODO 恢复平衡
+                restoreBalance2(node);
             }
         }
     }
@@ -120,6 +134,77 @@ public class C_AVLTree<E> extends B_BST<E>{
 
         updateHeight(grand);
         updateHeight(parent);
+    }
+
+    /**
+     * 恢复平衡,统一旋转操作
+     * @param grand 高度最低的那个不平衡节点
+     */
+    private void restoreBalance2(Node<E> grand) {
+        Node<E> parent = ((AVLNode<E>)grand).tallerChild();
+        Node<E> node = ((AVLNode<E>)parent).tallerChild();
+
+
+        // 详见AVL旋转统一.png 图片
+        if (parent.isLeftChild()){// L
+            if (node.isLeftChild()){ // LL
+                rotate(grand, node.left, node, node.right, parent, parent.right, grand, grand.right);
+            }else{// LR
+                rotate(grand, parent.left, parent, node.left, node, node.right, grand, grand.right);
+            }
+        }else{ // R
+            if (node.isLeftChild()){ // RL
+                rotate(grand, grand.left, grand, node.left, node, node.right, parent, parent.right);
+            }else{// RR
+                rotate(grand, grand.left, grand, parent.left, parent, node.left, node, node.right);
+            }
+        }
+    }
+
+    private void rotate(
+            Node<E> childRoot, // 子树根节点
+            Node<E> a, Node<E> b, Node<E> c,
+            Node<E> d,
+            Node<E> e, Node<E> f, Node<E> g){
+        // 让d成为这棵子树的根节点
+        d.parent = childRoot.parent;
+        if (childRoot.isLeftChild()){
+            childRoot.parent.left = d;
+        }else if(childRoot.isRightChild()){
+            childRoot.parent.right = d;
+        }else{
+            root = d;
+        }
+
+        // a - b - c
+        b.left = a;
+        if (a != null){
+            a.parent = b;
+        }
+        b.right = c;
+        if(c != null){
+            c.parent = b;
+        }
+        updateHeight(b);
+
+        // e - f -g
+        f.left = e;
+        if (e != null){
+            e.parent = f;
+        }
+        f.right = g;
+        if(g != null){
+            g.parent = f;
+        }
+        updateHeight(f);
+
+        // b - d - f
+        d.left = b;
+        d.right = f;
+        b.parent = d;
+        f.parent = d;
+
+        updateHeight(d);
     }
 
     private boolean isBalanced(Node<E> node) {

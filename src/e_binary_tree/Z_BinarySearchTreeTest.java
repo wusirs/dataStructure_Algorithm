@@ -158,6 +158,25 @@ public class Z_BinarySearchTreeTest {
         C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>();
         for (int i = 0; i < data.length; i++) {
             avlTree.add(data[i]);
+            BinaryTrees.println(avlTree);
+            System.out.println("--------------------------------");
+        }
+//        BinaryTrees.println(avlTree);
+    }
+
+
+    @Test
+    public void AVLTreeRemoveTest() {
+        Integer data[] = new Integer[]{67, 52, 92, 96, 53, 95, 13, 63, 34, 82, 76, 54, 9, 68, 39};
+        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>();
+        for (int i = 0; i < data.length; i++) {
+            avlTree.add(data[i]);
+        }
+
+        for (int i = 0; i < data.length; i++) {
+            avlTree.remove(data[i]);
+            BinaryTrees.println(avlTree);
+            System.out.println("________________________________________________________________");
         }
         BinaryTrees.println(avlTree);
     }

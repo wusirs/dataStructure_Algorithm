@@ -99,6 +99,7 @@ public class B_BST<E> extends A_BinaryTree {
             // 删除后继节点,只需要把后继节点赋值给node,后面判断删除这个successor节点,这个后继节点的度必然是1或0
             node = successor;
         }
+
         // 删除node节点,能来到这个位置node的度必然是1或0
         Node replacement = node.left != null ? node.left : node.right;
         if (replacement != null) {// node是度为1的节点
@@ -114,15 +115,32 @@ public class B_BST<E> extends A_BinaryTree {
                     node.parent.right = replacement;
                 }
             }
+
+            // 真正被删除的节点
+            afterRemove(node);
         } else if (node.parent == null) {// node是叶子节点并且是根节点
             this.root = null;
+
+            // 真正被删除的节点
+            afterRemove(node);
         } else { // node是叶子节点,但不是根节点
             if (node == node.parent.left) {
                 node.parent.left = null;
             } else { // node == node.parent.right
                 node.parent.right = null;
             }
+
+            // 真正被删除的节点
+            afterRemove(node);
         }
+    }
+
+    /**
+     * 删除node之后的调整
+     * @param node 被删除的节点
+     */
+    protected void afterRemove(Node node) {
+//        do nothing
     }
 
     private Node<E> node(E element) {
