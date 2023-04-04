@@ -44,7 +44,7 @@ public class C_AVLTree<E> extends B_BST<E>{
     }
 
     @Override
-    protected void afterRemove(Node node) {
+    protected void afterRemove(Node<E> node) {
         while ((node = node.parent) != null){
             if (isBalanced(node)){
                 // TODO 更新高度
@@ -60,6 +60,7 @@ public class C_AVLTree<E> extends B_BST<E>{
      * 恢复平衡
      * @param grand 高度最低的那个不平衡节点
      */
+    @SuppressWarnings("unused")
     private void restoreBalance(Node<E> grand) {
         Node<E> parent = ((AVLNode<E>)grand).tallerChild();
         Node<E> node = ((AVLNode<E>)parent).tallerChild();
@@ -83,7 +84,7 @@ public class C_AVLTree<E> extends B_BST<E>{
 
     /**
      * 左旋
-     * @param grand
+     * @param grand 失衡的节点
      */
     private void rotateLeft(Node<E> grand){
         Node<E> parent = grand.right;
@@ -96,7 +97,7 @@ public class C_AVLTree<E> extends B_BST<E>{
 
     /**
      * 右旋
-     * @param grand
+     * @param grand 失衡的节点
      */
     private void rotateRight(Node<E> grand){
         Node<E> parent = grand.left;
@@ -109,7 +110,7 @@ public class C_AVLTree<E> extends B_BST<E>{
 
     /**
      * 左右旋转公用代码
-     * @param grand
+     * @param grand 失衡的节点
      * @param parent
      * @param child
      */
@@ -148,24 +149,34 @@ public class C_AVLTree<E> extends B_BST<E>{
         // 详见AVL旋转统一.png 图片
         if (parent.isLeftChild()){// L
             if (node.isLeftChild()){ // LL
-                rotate(grand, node.left, node, node.right, parent, parent.right, grand, grand.right);
+                rotate(grand, node, node.right, parent, parent.right, grand);
             }else{// LR
-                rotate(grand, parent.left, parent, node.left, node, node.right, grand, grand.right);
+                rotate(grand, parent, node.left, node, node.right, grand);
             }
         }else{ // R
             if (node.isLeftChild()){ // RL
-                rotate(grand, grand.left, grand, node.left, node, node.right, parent, parent.right);
+                rotate(grand, grand, node.left, node, node.right, parent);
             }else{// RR
-                rotate(grand, grand.left, grand, parent.left, parent, node.left, node, node.right);
+                rotate(grand, grand, parent.left, parent, node.left, node);
             }
         }
     }
 
+
+    /**
+     *  注意a和g节点可以不处理,因为a和g的节点相对位置没有发生变化
+     * @param childRoot 子树根节点
+     * @param b
+     * @param c
+     * @param d
+     * @param e
+     * @param f
+     */
     private void rotate(
             Node<E> childRoot, // 子树根节点
-            Node<E> a, Node<E> b, Node<E> c,
+            Node<E> b, Node<E> c,
             Node<E> d,
-            Node<E> e, Node<E> f, Node<E> g){
+            Node<E> e, Node<E> f){
         // 让d成为这棵子树的根节点
         d.parent = childRoot.parent;
         if (childRoot.isLeftChild()){
@@ -176,26 +187,19 @@ public class C_AVLTree<E> extends B_BST<E>{
             root = d;
         }
 
-        // a - b - c
-        b.left = a;
-        if (a != null){
-            a.parent = b;
-        }
+        //  b - c
         b.right = c;
         if(c != null){
             c.parent = b;
         }
         updateHeight(b);
 
-        // e - f -g
+        // e - f
         f.left = e;
         if (e != null){
             e.parent = f;
         }
-        f.right = g;
-        if(g != null){
-            g.parent = f;
-        }
+
         updateHeight(f);
 
         // b - d - f
@@ -223,20 +227,20 @@ public class C_AVLTree<E> extends B_BST<E>{
         }
 
         public int balanceFactor() {
-            int leftHeight = left == null ? 0 : ((AVLNode)left).height;
-            int rightHeight = right == null ? 0 : ((AVLNode)right).height;
+            int leftHeight = left == null ? 0 : ((AVLNode<E>)left).height;
+            int rightHeight = right == null ? 0 : ((AVLNode<E>)right).height;
             return leftHeight - rightHeight;
         }
 
         public void updateHeight() {
-            int leftHeight = left == null ? 0 : ((AVLNode)left).height;
-            int rightHeight = right == null ? 0 : ((AVLNode)right).height;
+            int leftHeight = left == null ? 0 : ((AVLNode<E>)left).height;
+            int rightHeight = right == null ? 0 : ((AVLNode<E>)right).height;
             this.height = 1 + Math.max(leftHeight, rightHeight);
         }
 
         public Node<E> tallerChild() {
-            int leftHeight = left == null ? 0 : ((AVLNode)left).height;
-            int rightHeight = right == null ? 0 : ((AVLNode)right).height;
+            int leftHeight = left == null ? 0 : ((AVLNode<E>)left).height;
+            int rightHeight = right == null ? 0 : ((AVLNode<E>)right).height;
             if (leftHeight > rightHeight) {
                 return left;
             }
@@ -261,11 +265,11 @@ public class C_AVLTree<E> extends B_BST<E>{
         return new AVLNode<>(element, parent);
     }
 
-//    @Override
-//    public Object string(Object node) {
-//        Node<E> myNode = ((Node<E>) node);
-//        String parentStr = myNode.parent != null ? myNode.parent.element.toString() : "null";
-//        return myNode.element + "_p(" + parentStr + ")_h(" + ((AVLNode<E>)node).height + ")";
-//    }
+    /*@Override
+    public Object string(Object node) {
+        Node<E> myNode = ((Node<E>) node);
+        String parentStr = myNode.parent != null ? myNode.parent.element.toString() : "null";
+        return myNode.element + "_p(" + parentStr + ")_h(" + ((AVLNode<E>)node).height + ")";
+    }*/
 }
 

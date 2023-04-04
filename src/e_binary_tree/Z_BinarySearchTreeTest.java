@@ -2,10 +2,13 @@ package e_binary_tree;
 
 import org.junit.Test;
 import w_bean.Person;
+import z_util.TimeTool;
 import z_util.file.Files;
 import z_util.printer.BinaryTrees;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author heisenberg
@@ -178,6 +181,56 @@ public class Z_BinarySearchTreeTest {
             BinaryTrees.println(avlTree);
             System.out.println("________________________________________________________________");
         }
+        BinaryTrees.println(avlTree);
+    }
+
+    @Test
+    public void AVLTreeRemoveTest02() {
+        List<Integer> data = new ArrayList<Integer>();
+        for (int i = 0; i < 100_0000; i++) {
+            data.add((int) (Math.random() * 100_0000));
+        }
+
+        // 可以对如下代码测消耗时间,比较BST 树和AVL 树的添加,搜索,删除耗时
+        B_BST<Integer> bst = new B_BST<Integer>();
+        TimeTool.check("BST二叉树添加", () -> {
+            for (int i = 0; i < data.size(); i++) {
+                bst.add(data.get(i));
+            }
+        });
+
+        TimeTool.check("BST二叉树查找", () -> {
+            for (int i = 0; i < data.size(); i++) {
+                bst.contains(data.get(i));
+            }
+        });
+
+        TimeTool.check("BST二叉树删除", () -> {
+            for (int i = 0; i < data.size(); i++) {
+                bst.remove(data.get(i));
+            }
+        });
+
+        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>();
+        TimeTool.check("AVL二叉树添加", () -> {
+            for (int i = 0; i < data.size(); i++) {
+                avlTree.add(data.get(i));
+            }
+        });
+
+        TimeTool.check("AVL二叉树查找", () -> {
+            for (int i = 0; i < data.size(); i++) {
+                avlTree.contains(data.get(i));
+            }
+        });
+
+        TimeTool.check("AVL二叉树删除", () -> {
+            for (int i = 0; i < data.size(); i++) {
+                avlTree.remove(data.get(i));
+            }
+        });
+
+
         BinaryTrees.println(avlTree);
     }
 }

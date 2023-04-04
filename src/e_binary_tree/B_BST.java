@@ -3,8 +3,8 @@ package e_binary_tree;
 
 import java.util.Comparator;
 
-public class B_BST<E> extends A_BinaryTree {
-    private Comparator<E> comparator;
+public class B_BST<E> extends A_BinaryTree<E> {
+    private final Comparator<E> comparator;
 
     public B_BST(Comparator<E> comparator) {
         this.comparator = comparator;
@@ -59,7 +59,7 @@ public class B_BST<E> extends A_BinaryTree {
 
     /**
      * 添加node之后的调整,
-     * @param node
+     * @param node 添加的节点
      */
     protected void afterAdd(Node<E> node) {
 
@@ -79,13 +79,12 @@ public class B_BST<E> extends A_BinaryTree {
      * <p>
      * note:如果一个节点的度为2,那么它的前驱和后继节点的度只可能是1或0
      *
-     * @return
      */
     public void remove(E element) {
         remove(node(element));
     }
 
-    private void remove(Node node) {
+    private void remove(Node<E> node) {
         if (node == null) {
             return;
         }
@@ -93,7 +92,7 @@ public class B_BST<E> extends A_BinaryTree {
         size--;
         if (node.hasTwoChildren()) { // 度为2的节点
             // 找后继
-            Node successor = successor(node);
+            Node<E> successor = successor(node);
             // 用后继节点的值覆盖度为2的节点的值
             node.element = successor.element;
             // 删除后继节点,只需要把后继节点赋值给node,后面判断删除这个successor节点,这个后继节点的度必然是1或0
@@ -101,7 +100,7 @@ public class B_BST<E> extends A_BinaryTree {
         }
 
         // 删除node节点,能来到这个位置node的度必然是1或0
-        Node replacement = node.left != null ? node.left : node.right;
+        Node<E> replacement = node.left != null ? node.left : node.right;
         if (replacement != null) {// node是度为1的节点
             // 更改parent
             replacement.parent = node.parent;
@@ -139,7 +138,7 @@ public class B_BST<E> extends A_BinaryTree {
      * 删除node之后的调整
      * @param node 被删除的节点
      */
-    protected void afterRemove(Node node) {
+    protected void afterRemove(Node<E> node) {
 //        do nothing
     }
 
@@ -168,10 +167,11 @@ public class B_BST<E> extends A_BinaryTree {
      * 返回值大于0，则 e1 > e2
      * 返回值小于0，则 e1 < e2
      *
-     * @param e1
-     * @param e2
-     * @return
+     * @param e1 元素1
+     * @param e2 元素2
+     * @return 返回比较结果
      */
+    @SuppressWarnings("unchecked")
     private int compare(E e1, E e2) {
         if (comparator != null) {
             return comparator.compare(e1, e2);
