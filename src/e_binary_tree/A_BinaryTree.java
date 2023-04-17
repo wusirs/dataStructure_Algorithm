@@ -380,6 +380,22 @@ public class A_BinaryTree<E> implements BinaryTreeInfo {
             return parent != null && this == parent.right;
         }
 
+
+        /**
+         * @return 返回兄弟节点
+         */
+        public Node<E> sibling(){
+            if (isLeftChild()){
+                return parent.right;
+            }
+
+            if (isRightChild()){
+                return parent.left;
+            }
+
+            return null;
+        }
+
         @Override
         public String toString() {
 //            Node<E> myNode = ((Node<E>) this);
