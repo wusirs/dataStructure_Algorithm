@@ -44,18 +44,17 @@ public class D_RBTree<E> extends B_BBST<E> {
         // uncle 节点
         Node<E> uncle = parent.sibling();
         // 祖父节点
-        Node<E> grand = parent.parent;
+        Node<E> grand = red(parent.parent);
         if (isRed(uncle)){
-            // 情况2：叔父节点是红色，添加节点会导致上溢
+            // 情况2：叔父节点是红色，添加节点会导致【上溢】
             black(parent);
             black(uncle);
             // 祖父节点当作新添加的节点，把祖父节点染成红色，递归调用afterAdd方法
-            afterAdd(red(grand));
+            afterAdd(grand);
             return;
         }
         // 情况3：叔父节点不是红色，添加节点不会上溢，但是要进行旋转
         if (parent.isLeftChild()) { // L
-            red(grand);
             if (node.isLeftChild()) { // LL
                 black(parent);
             }else{ // LR
@@ -64,7 +63,6 @@ public class D_RBTree<E> extends B_BBST<E> {
             }
             rotateRight(grand);
         }else {
-            red(grand);
             if (node.isLeftChild()) { // RL
                 black(node);
                 rotateRight(parent);
