@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 
 //@SuppressWarnings("all")
-public class D_RBTree<E> extends B_BST<E> {
+public class D_RBTree<E> extends B_BBST<E> {
     public static final boolean RED = false;
     public static final boolean BLACK = true;
 
@@ -19,6 +19,60 @@ public class D_RBTree<E> extends B_BST<E> {
 
     public D_RBTree() {
         this(null);
+    }
+
+
+    /**
+     * 添加之后修复红黑树的性质
+     * @param node 添加的节点
+     */
+    @Override
+    protected void afterAdd(Node<E> node) {
+        Node<E> parent = node.parent;
+
+        // 添加的是根节点
+        if (parent == null) {
+            black(node);
+            return;
+        }
+
+        // 情况1：添加的节点父节点是黑色不需要任何处理
+        if (isBlack(parent)) {
+            return;
+        }
+
+        // uncle 节点
+        Node<E> uncle = parent.sibling();
+        // 祖父节点
+        Node<E> grand = parent.parent;
+        if (isRed(uncle)){
+            // 情况2：叔父节点是红色，添加节点会导致上溢
+            black(parent);
+            black(uncle);
+            // 祖父节点当作新添加的节点，把祖父节点染成红色，递归调用afterAdd方法
+            afterAdd(red(grand));
+            return;
+        }
+        // 情况3：叔父节点不是红色，添加节点不会上溢，但是要进行旋转
+        if (parent.isLeftChild()) { // L
+            red(grand);
+            if (node.isLeftChild()) { // LL
+                black(parent);
+            }else{ // LR
+                black(node);
+                rotateLeft(parent);
+            }
+            rotateRight(grand);
+        }else {
+            red(grand);
+            if (node.isLeftChild()) { // RL
+                black(node);
+                rotateRight(parent);
+            }else{ // RR
+                black(parent);
+            }
+            rotateLeft(grand);
+        }
     }
 
     /**
@@ -79,11 +133,25 @@ public class D_RBTree<E> extends B_BST<E> {
         return colorOf(node) == RED;
     }
 
+    @Override
+    protected Node<E> createNode(E element, Node<E> parent) {
+        return new RBNode<E>(element, parent);
+    }
+
     private static class RBNode<E> extends Node<E>{
         boolean color = RED;
 
         public RBNode(E element, Node<E> parent) {
             super(element, parent);
+        }
+
+        @Override
+        public String toString() {
+            String  str = "";
+            if (color == RED){
+                str = "R_";
+            }
+            return str + element.toString();
         }
     }
 }

@@ -3,14 +3,14 @@ package e_binary_tree;
 
 import java.util.Comparator;
 
-public class B_BST<E> extends A_BinaryTree<E> {
+public class C_BST<E> extends A_BinaryTree<E> {
     private final Comparator<E> comparator;
 
-    public B_BST(Comparator<E> comparator) {
+    public C_BST(Comparator<E> comparator) {
         this.comparator = comparator;
     }
 
-    public B_BST() {
+    public C_BST() {
         this(null);
     }
 

@@ -27,11 +27,11 @@ public class A_BinaryTree<E> implements BinaryTreeInfo {
         preorderTraversal(root, null);
     }
 
-    public void preorderTraversal(B_BST.Visitor<E> visitor) {
+    public void preorderTraversal(C_BST.Visitor<E> visitor) {
         preorderTraversal(root, visitor);
     }
 
-    public void preorderTraversal(Node<E> node, B_BST.Visitor<E> visitor) {
+    public void preorderTraversal(Node<E> node, C_BST.Visitor<E> visitor) {
         if (node == null) {
             return;
         }
@@ -53,11 +53,11 @@ public class A_BinaryTree<E> implements BinaryTreeInfo {
         inorderTraversal(root, null);
     }
 
-    public void inorderTraversal(B_BST.Visitor<E> visitor) {
+    public void inorderTraversal(C_BST.Visitor<E> visitor) {
         inorderTraversal(root, visitor);
     }
 
-    public void inorderTraversal(Node<E> node, B_BST.Visitor<E> visitor) {
+    public void inorderTraversal(Node<E> node, C_BST.Visitor<E> visitor) {
         if (node == null) {
             return;
         }
@@ -81,11 +81,11 @@ public class A_BinaryTree<E> implements BinaryTreeInfo {
         postorderTraversal(root, null);
     }
 
-    public void postorderTraversal(B_BST.Visitor<E> visitor) {
+    public void postorderTraversal(C_BST.Visitor<E> visitor) {
         postorderTraversal(root, visitor);
     }
 
-    public void postorderTraversal(Node<E> node, B_BST.Visitor<E> visitor) {
+    public void postorderTraversal(Node<E> node, C_BST.Visitor<E> visitor) {
         if (node == null) {
             return;
         }
@@ -113,7 +113,7 @@ public class A_BinaryTree<E> implements BinaryTreeInfo {
         levelOrderTraversal(null);
     }
 
-    public void levelOrderTraversal(B_BST.Visitor<E> visitor) {
+    public void levelOrderTraversal(C_BST.Visitor<E> visitor) {
         if (root == null) {
             return;
         }

@@ -2,7 +2,6 @@ package d_queue;
 
 import org.junit.Test;
 
-import javax.annotation.Resource;
 import java.util.LinkedList;
 
 public class Z_Test {

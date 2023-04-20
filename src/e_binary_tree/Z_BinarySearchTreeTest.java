@@ -13,11 +13,12 @@ import java.util.List;
 /**
  * @author heisenberg
  */
+@SuppressWarnings("all")
 public class Z_BinarySearchTreeTest {
     @Test
     public void BinarySearchTreeTest_01() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
-        B_BST<Integer> binarySearchTreeA = new B_BST<Integer>();
+        C_BST<Integer> binarySearchTreeA = new C_BST<Integer>();
         for (int i = 0; i < data.length; i++) {
             binarySearchTreeA.add(data[i]);
         }
@@ -28,8 +29,8 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void BinarySearchTreeTest_02() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
-        B_BST<Person> binarySearchTree =
-                new B_BST<Person>(new Comparator<Person>() {
+        C_BST<Person> binarySearchTree =
+                new C_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -47,8 +48,8 @@ public class Z_BinarySearchTreeTest {
 
     @Test
     public void BinarySearchTreeTest_03() {
-        B_BST<Person> binarySearchTree =
-                new B_BST<Person>(new Comparator<Person>() {
+        C_BST<Person> binarySearchTree =
+                new C_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -72,8 +73,8 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void preorderTraversalTest() {
         Integer data[] = new Integer[]{7, 4, 2, 1, 3, 5, 9, 8, 11, 10, 12};
-        B_BST<Person> binarySearchTree =
-                new B_BST<Person>(new Comparator<Person>() {
+        C_BST<Person> binarySearchTree =
+                new C_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -100,8 +101,8 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void inorderTraversalTest() {
         Integer data[] = new Integer[]{7, 4, 2, 1, 3, 5, 9, 8, 11, 10, 12};
-        B_BST<Person> binarySearchTree =
-                new B_BST<Person>(new Comparator<Person>() {
+        C_BST<Person> binarySearchTree =
+                new C_BST<Person>(new Comparator<Person>() {
                     @Override
                     public int compare(Person p1, Person p2) {
                         return p1.getAge() - p2.getAge();
@@ -129,7 +130,7 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void isCompleteTreeTest() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5};
-        B_BST<Person> binarySearchTree = new B_BST<Person>();
+        C_BST<Person> binarySearchTree = new C_BST<Person>();
         for (int i = 0; i < data.length; i++) {
             binarySearchTree.add(new Person(data[i]));
         }
@@ -140,7 +141,7 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void removeTest() {
         Integer data[] = new Integer[]{7, 4, 9, 2, 5, 8, 11, 3, 12, 1};
-        B_BST<Integer> binarySearchTree = new B_BST<Integer>();
+        C_BST<Integer> binarySearchTree = new C_BST<Integer>();
         for (int i = 0; i < data.length; i++) {
             binarySearchTree.add(data[i]);
         }
@@ -158,7 +159,7 @@ public class Z_BinarySearchTreeTest {
     public void AVLTreeTest() {
         Integer data[] = new Integer[]{85, 19, 69, 3, 7, 99, 95, 2, 1, 70, 44, 58, 11, 21, 14, 93
                 , 57, 4, 56};
-        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>();
+        D_AVLTree<Integer> avlTree = new D_AVLTree<Integer>();
         for (int i = 0; i < data.length; i++) {
             avlTree.add(data[i]);
             BinaryTrees.println(avlTree);
@@ -171,7 +172,7 @@ public class Z_BinarySearchTreeTest {
     @Test
     public void AVLTreeRemoveTest() {
         Integer data[] = new Integer[]{67, 52, 92, 96, 53, 95, 13, 63, 34, 82, 76, 54, 9, 68, 39};
-        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>();
+        D_AVLTree<Integer> avlTree = new D_AVLTree<Integer>();
         for (int i = 0; i < data.length; i++) {
             avlTree.add(data[i]);
         }
@@ -192,7 +193,7 @@ public class Z_BinarySearchTreeTest {
         }
 
         // 可以对如下代码测消耗时间,比较BST 树和AVL 树的添加,搜索,删除耗时
-        B_BST<Integer> bst = new B_BST<Integer>();
+        C_BST<Integer> bst = new C_BST<Integer>();
         TimeTool.check("BST二叉树添加", () -> {
             for (int i = 0; i < data.size(); i++) {
                 bst.add(data.get(i));
@@ -211,7 +212,7 @@ public class Z_BinarySearchTreeTest {
             }
         });
 
-        C_AVLTree<Integer> avlTree = new C_AVLTree<Integer>();
+        D_AVLTree<Integer> avlTree = new D_AVLTree<Integer>();
         TimeTool.check("AVL二叉树添加", () -> {
             for (int i = 0; i < data.size(); i++) {
                 avlTree.add(data.get(i));
@@ -230,7 +231,20 @@ public class Z_BinarySearchTreeTest {
             }
         });
 
-
         BinaryTrees.println(avlTree);
+    }
+
+    @Test
+    public void RBTTest() {
+        Integer data[] = new Integer[]{55, 87, 56, 74, 96, 22, 62, 20, 70, 68, 90, 50};
+        D_RBTree<Integer> rb = new D_RBTree<>();
+        for (int i = 0; i < data.length; i++) {
+            rb.add(data[i]);
+            System.out.println("【" + data[i] + "】");
+            BinaryTrees.println(rb);
+            System.out.println("________________________________________________________________");
+        }
+
+        BinaryTrees.println(rb);
     }
 }
