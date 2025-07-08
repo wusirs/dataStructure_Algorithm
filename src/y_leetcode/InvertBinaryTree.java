@@ -6,9 +6,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * https://leetcode.cn/problems/invert-binary-tree/
+ * 226. 翻转二叉树
+ * <a href="https://leetcode.cn/problems/invert-binary-tree/">226. 翻转二叉树</a>
  */
-public class _226_翻转二叉树 {
+public class InvertBinaryTree {
 
     /**
      * 前序遍历实现

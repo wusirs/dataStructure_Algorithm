@@ -4,14 +4,15 @@ package y_leetcode;
 import y_leetcode.node.ListNode;
 
 /**
- * https://leetcode.cn/problems/reverse-linked-list/
+ * 206. 反转链表
+ * <a href="https://leetcode.cn/problems/reverse-linked-list/">206. 反转链表</a>
  */
-public class _206_反转链表 {
+public class ReverseLinkedList {
 
     /**
      * 递归
-     * @param head
-     * @return
+     * @param head 链表头
+     * @return {@link ListNode}
      */
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) {
@@ -27,8 +28,8 @@ public class _206_反转链表 {
 
     /**
      * 非递归（迭代）
-     * @param head
-     * @return
+     * @param head 链表头
+     * @return {@link ListNode}
      */
     public ListNode reverseList2(ListNode head) {
         ListNode newHead = null;

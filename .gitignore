@@ -2,3 +2,5 @@
 /out/
 /.idea/vcs.xml
 !/dataStructure_Algorithm.iml
+/.idea/
+/target/

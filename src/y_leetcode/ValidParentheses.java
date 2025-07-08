@@ -7,32 +7,32 @@ import java.util.Stack;
 
 /**
  * 20. 有效的括号
- * https://leetcode.cn/problems/valid-parentheses/solution/
+ * <a href="https://leetcode.cn/problems/valid-parentheses/solution/">20. 有效的括号</a>
  * 思路：逐个把左括号放入栈，当遇到右括号弹出栈顶元素与其匹配，完全匹配完则是有效的括号
  */
-public class _20_有效的括号 {
+public class ValidParentheses {
     @Test
-    public void test(){
-        System.out.println(isValid1("[]{}"));
+    public void test() {
+        System.out.println(isValidSolveOne("[]{}"));
     }
 
-    private static HashMap<Character, Character> map = new HashMap<>();
+    private static final HashMap<Character, Character> map = new HashMap<>();
 
     static {
-        map.put('(',')');
-        map.put('[',']');
-        map.put('{','}');
+        map.put('(', ')');
+        map.put('[', ']');
+        map.put('{', '}');
     }
 
-    public boolean isValid1(String s) {
+    public boolean isValidSolveOne(String s) {
         int len = s.length();
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
-            if (map.containsKey(c)){
+            if (map.containsKey(c)) {
                 stack.push(c);
-            }else {
-                if (stack.isEmpty()){
+            } else {
+                if (stack.isEmpty()) {
                     return false;
                 }
                 if (c != map.get(stack.pop()))
@@ -48,10 +48,10 @@ public class _20_有效的括号 {
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
-            if (c == '{' || c == '[' || c == '('){
+            if (c == '{' || c == '[' || c == '(') {
                 stack.push(c);
-            }else {
-                if (stack.isEmpty()){
+            } else {
+                if (stack.isEmpty()) {
                     return false;
                 }
                 Character left = stack.pop();
@@ -64,9 +64,7 @@ public class _20_有效的括号 {
         return stack.isEmpty();
     }
 
-
-
-    public boolean equal(Character left, Character right){
+    public boolean equal(Character left, Character right) {
         if (left == '(' && right != ')')
             return false;
         if (left == '[' && right != ']')

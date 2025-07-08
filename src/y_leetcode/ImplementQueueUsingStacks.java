@@ -4,13 +4,13 @@ import java.util.Stack;
 
 /**
  * 232. 用栈实现队列
- * https://leetcode.cn/problems/implement-queue-using-stacks/
+ * <a href="https://leetcode.cn/problems/implement-queue-using-stacks/">232. 用栈实现队列</a>
  */
-public class _232_用栈实现队列 {
+public class ImplementQueueUsingStacks {
     private Stack<Integer> inStack = new Stack<>();
     private Stack<Integer> outStack = new Stack<>();
 
-    public _232_用栈实现队列() {
+    public ImplementQueueUsingStacks() {
 
     }
 

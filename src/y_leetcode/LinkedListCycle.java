@@ -3,10 +3,10 @@ package y_leetcode;
 import y_leetcode.node.ListNode;
 
 /**
- * 快慢指针
- * https://leetcode-cn.com/problems/linked-list-cycle/
+ * 141. 环形链表
+ * <a href="https://leetcode-cn.com/problems/linked-list-cycle/">141. 环形链表</a>
  */
-public class _141_环形链表 {
+public class LinkedListCycle {
     public boolean hasCycle(ListNode head) {
         if (head == null || head.next == null)
             return false;
